@@ -193,6 +193,11 @@ function resetDeck(){
     createCards();
 }
 
+function resetModal(){
+  modal.classList.remove("show-modal");
+  resetDeck();
+}
+
 //move count setup:
 const moves=document.querySelector(".moves");
 const cardClickedArray=[];
@@ -201,7 +206,10 @@ theDeck.addEventListener("click",cardFlip);
 //restart-reset widget setup:
 const restart = document.querySelector(".restart");
 restart.addEventListener("click",resetDeck);
-
+const modal = document.querySelector(".modal");
+//play again button (on modal) setup:
+const playAgainBtn = document.getElementById("modal-btn");
+playAgainBtn.addEventListener("click",resetModal);
 
 //finishing the game and displaying the stats:
 function gameFinished(){
@@ -214,12 +222,11 @@ function gameFinished(){
     );
     //sets up the modal where the stats will be displayed once the game is finished:
     if (count===allCards.length){
-        const modal = document.querySelector(".modal");
-        const closeButton = document.querySelector(".close-button");
-        const mcontent = document.querySelector(".modal-content");
+      // const closeButton = document.querySelector(".close-button");
+        const mcText = document.getElementById("modal-text");
         const finalMoves = document.querySelector(".moves").textContent;
         const finalStars = document.querySelector(".stars").childElementCount;
-        mcontent.innerHTML="<h1>Congratulations!</h1><p>You finished the game in " + finalMoves + " moves and earned " + finalStars + " stars.</p>";
+        mcText.innerHTML="<h1>Congratulations!</h1><p>You finished the game in " + finalMoves + " moves and earned " + finalStars + " stars.</p>" ;
         modal.classList.add("show-modal");
     }//end of if statement
 }//end of gameFinished function
