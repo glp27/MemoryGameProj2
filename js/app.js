@@ -1,7 +1,13 @@
 /*
  * Create a list that holds all of your cards
  */
+
+const theDeck=document.querySelector(".deck");
+
 const cardsArray=["fa fa-diamond","fa fa-diamond","fa fa-anchor","fa fa-anchor","fa fa-paper-plane-o","fa fa-paper-plane-o","fa fa-bolt","fa fa-bolt","fa fa-cube","fa fa-cube","fa fa-leaf","fa fa-leaf","fa fa-bomb","fa fa-bomb","fa fa-bicycle","fa fa-bicycle"];
+
+createCards();
+
 
 /*
  * Display the cards on the page
@@ -9,6 +15,7 @@ const cardsArray=["fa fa-diamond","fa fa-diamond","fa fa-anchor","fa fa-anchor",
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
+
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -24,8 +31,12 @@ function shuffle(array) {
     return array;
 }
 
-//iterates  through the shuffled cardsArray and creates the html for the deck
+
 function createCards(){
+  //calls the function to shuffle the array of cards and saves it to shuffledArray:
+  const shuffledArray = shuffle(cardsArray);
+  const frag=document.createDocumentFragment();
+    //iterates  through the shuffled cardsArray and creates the html for the deck:
     for (var i = 0 ; i< shuffledArray.length; i++ ){
         let el=document.createElement("li");
         el.classList.add("card");
@@ -34,17 +45,10 @@ function createCards(){
         el.appendChild(childEl);
         frag.appendChild(el);
     }
-    return frag
+    //adds the html created to the deck:
+    theDeck.appendChild(frag);
 }
 
-//calls the function to shuffle the array of cards and saves it to shuffledArray:
-const shuffledArray = shuffle(cardsArray);
-const frag=document.createDocumentFragment();
-const theDeck=document.querySelector(".deck");
-//calls the function to create the html for the cards:
-createCards();
-//adds the html created by the createCards function to the deck:
-theDeck.appendChild(frag);
 
 /*
  * set up the event listener for a card.
@@ -61,6 +65,7 @@ theDeck.appendChild(frag);
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
 
 //handles the actions to take place once the card is clicked:
 function cardFlip(evt){
@@ -181,15 +186,11 @@ function cardsDontMatch() {
 
 //clears out the deck and score when the reset widget is clicked:
 function resetDeck(){
-    const allCards=document.querySelectorAll(".card");
-    allCards.forEach(
-          function(el){
-                el.className="card";
-          }
-    );
+    theDeck.innerHTML="";
     cardClickedArray.length=0;
     document.querySelector(".stars").innerHTML="";
     document.querySelector(".moves").textContent=0;
+    createCards();
 }
 
 //move count setup:
