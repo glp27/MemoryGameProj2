@@ -66,6 +66,7 @@ function createCards(){
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
+let timerStarted=false;
 
 //handles the actions to take place once the card is clicked:
 function cardFlip(evt){
@@ -82,6 +83,11 @@ function cardFlip(evt){
         cardCompare();
         //calls function to determines the amount of stars:
         displayStars();
+        //calls function to start timer:
+        if (!timerStarted){
+          timingGame();
+          timerStarted=true;
+          }
     }//end of if statement
 }//end of cardFlip function
 
@@ -171,6 +177,35 @@ function displayStars(){
 } //end of displayStars function
 
 
+//timer setup:
+let time=0;
+const timer=document.querySelector(".timer");
+let myTimer;
+let timeString;
+
+function timingGame(){
+    myTimer=setInterval(startTimer,1000);
+}
+
+function startTimer(){
+        time++;
+        let mins=Math.floor(time/60);
+        let secs=time-(mins*60);
+        if (secs<10){
+          timeString=mins+":0"+secs;
+        } else {
+          timeString=mins+":"+secs;
+        }
+        timer.innerHTML=timeString;
+}
+
+function resetTimer(){
+  clearInterval(myTimer);
+  time=0;
+  timer.innerHTML="0:00";
+  timerStarted=false;
+}
+
 function cardsMatch() {
     cardClickedArray[0].className="card match";
     cardClickedArray[1].className="card match";
@@ -190,6 +225,7 @@ function resetDeck(){
     cardClickedArray.length=0;
     document.querySelector(".stars").innerHTML="";
     document.querySelector(".moves").textContent=0;
+    resetTimer();
     createCards();
 }
 
@@ -222,11 +258,12 @@ function gameFinished(){
     );
     //sets up the modal where the stats will be displayed once the game is finished:
     if (count===allCards.length){
-      // const closeButton = document.querySelector(".close-button");
+        clearInterval(myTimer);
         const mcText = document.getElementById("modal-text");
         const finalMoves = document.querySelector(".moves").textContent;
         const finalStars = document.querySelector(".stars").childElementCount;
-        mcText.innerHTML="<h1>Congratulations!</h1><p>You finished the game in " + finalMoves + " moves and earned " + finalStars + " stars.</p>" ;
+        const displayTime = timeString.substring(0,1) + " minutes, " + timeString.substring(2,5) + " seconds ";
+        mcText.innerHTML="<h1>Congratulations!</h1><p>You finished the game in " + displayTime + " with " + finalMoves + " moves and earned " + finalStars + " stars.</p>" ;
         modal.classList.add("show-modal");
     }//end of if statement
 }//end of gameFinished function

@@ -108,10 +108,14 @@ h1 {
     cursor: pointer;
 }
 
+.timer{
+margin-left: 30px;
+}
+
 /*
  * Styles for the Modal popup box
  */
- 
+
 .modal {
     position: fixed;
     left: 0;
