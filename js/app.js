@@ -3,9 +3,11 @@
  */
 
 const theDeck=document.querySelector(".deck");
-
-const cardsArray=["fa fa-diamond","fa fa-diamond","fa fa-anchor","fa fa-anchor","fa fa-paper-plane-o","fa fa-paper-plane-o","fa fa-bolt","fa fa-bolt","fa fa-cube","fa fa-cube","fa fa-leaf","fa fa-leaf","fa fa-bomb","fa fa-bomb","fa fa-bicycle","fa fa-bicycle"];
-
+//initial array of cards without their double:
+const initCardsArray=["fa fa-diamond","fa fa-anchor","fa fa-paper-plane-o","fa fa-bolt","fa fa-cube","fa fa-leaf","fa fa-bomb","fa fa-bicycle"];
+//doubles the array:
+const cardsArray= initCardsArray.concat(initCardsArray);
+//calls the createCards function:
 createCards();
 
 
